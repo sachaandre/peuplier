@@ -1,0 +1,35 @@
+extends layout 
+
+block content
+  h1=title
+
+  if testimony_list.length 
+    h2.mt-2 Tous les témoignages
+    ul(class="grid lg:grid-cols-3 gap-6 mt-4")
+      each val in testimony_list
+        li(class="bg-white rounded-md shadow-md p-4 flex flex-col justify-between")
+          div
+            if val.name=='Anonyme'
+              p.font-bold.text-lg Témoignage Anonyme 
+            else 
+              p.font-bold.text-lg Témoignage de : #{val.name}
+            ul#tags(class="flex flex-row w-full my-2")
+              if val.state=='Draft'
+                li(class="bg-amber-300 text-amber-950 text-sm rounded-sm px-3 py-1") Brouillon
+              if val.state=='Archived'
+                li(class="bg-gray-300 text-gray-950 text-sm rounded-sm px-3 py-1") Archivé 
+              if val.state=='Published'
+                li(class="bg-emerald-300 text-emerald-950 text-sm rounded-sm px-3 py-1") Publié
+              li(class="text-sm rounded-sm px-3 py-1 border border-indigo-500 text-indigo-500 ml-2")=val.readable_date
+            p=val.excerpt
+          div
+            a(href=val.url).peuplier-action-btn.peuplier-secondary.text-center.w-full.mt-6 Lire le détail
+          
+
+  else 
+    p.p-4.mt-4.rounded-sm.bg-orange-50.shadow-md
+      | Il n'y a pas de témoignages disponible.
+      br
+      | Merci de créer plusieurs témoignages afin de les afficher 
+      br
+      a(href="/temoigner").peuplier-action-btn Créer un témoignage

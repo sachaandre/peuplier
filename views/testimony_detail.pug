@@ -1,0 +1,67 @@
+extends layout
+
+block content
+    h1 Détail du témoignage de : #{testimony.name}
+    section.mt-4
+        div(class="flex gap-3 justify-end flex-col sm:flex-row")
+            unless testimony.state=="Published"
+                form(method="POST" action= testimony.url + "/publish")
+                    button.peuplier-action-btn.peuplier-secondary(type="submit") Publier sur Osuny
+            unless testimony.state=="Archived"
+                form(method="POST" action= testimony.url + "/archive")
+                    button.peuplier-action-btn.peuplier-secondary(type="submit") Archiver
+            unless testimony.state=="Draft"
+                form(method="POST" action= testimony.url + "/draft")
+                    button.peuplier-action-btn.peuplier-secondary(type="submit")  Mettre en brouillon
+            form(method="POST" action= testimony.url + "/delete")
+                button.peuplier-action-btn.peuplier-danger(type="submit" onclick="deleteTestimony(event)") Supprimer le témoignage
+
+    section(class="grid lg:grid-cols-7 gap-6 mt-6")
+        article(class="lg:col-span-2 bg-white border-2 border-indigo-200 rounded-md shadow-md p-4 h-fit")
+            h2 Métadonnées 
+            ul#tags(class="flex flex-row w-full my-2")
+                if testimony.state=='Draft'
+                    li(class="bg-amber-300 text-amber-950 text-sm rounded-sm px-3 py-1") Brouillon 
+                if testimony.state=='Published'
+                    li(class="bg-emerald-300 text-emerald-950 text-sm rounded-sm px-3 py-1") Publié
+                if testimony.state=='Archived'
+                    li(class="bg-gray-300 text-gray-950 text-sm rounded-sm px-3 py-1") Archivé
+                if testimony.name=='Anonyme'
+                    li(class="bg-purple-200 text-purple-950 text-sm rounded-sm px-3 py-1 ml-2") Anonyme
+                li(class="text-sm rounded-sm px-3 py-1 border border-indigo-700 text-indigo-700 ml-2")=testimony.readable_date
+                
+            //Genre
+            if testimony.gender==''
+                p <strong> Genre : </strong> Non défini
+            else
+                p <strong> Genre : </strong> #{testimony.gender}
+            //Âge
+            if testimony.age || testimony.age == null
+                p <strong> Age : </strong> Non renseigné
+            else
+                p <strong> Age : </strong> #{testimony.age}
+            //Commune
+            unless testimony.city
+                p <strong> Commune : </strong> Non renseignée
+            else
+                p <strong> Commune : </strong> #{testimony.city.name} (#{testimony.city.department.name})
+            
+            hr.border-indigo-200.mt-4
+
+            h2.mt-4 Informations de contact
+            if (!testimony.mail && !testimony.tel)
+                p Aucune information de contact renseignée
+            if testimony.mail
+                p <strong> Adresse courriel : </strong> #{testimony.mail}
+            if testimony.tel
+                p <strong> Téléphone : </strong> #{testimony.tel}
+    
+        article(class=" lg:col-span-5 lg:col-start-3 bg-white rounded-md shadow-md p-4")
+            h2 Témoignage
+            p.text-md.whitespace-pre-line #{testimony.testimony}
+    
+    script
+        | function deleteTestimony(e){if(!window.confirm("Voulez-vous vraiment supprimer ce témoignage ?")){e.preventDefault()}}
+        
+    
+        

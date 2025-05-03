@@ -1,0 +1,94 @@
+extends iframe_view
+
+block content 
+    h1.text-center=title
+
+    if errors
+        
+        ul(class="flex justify-center")
+            for error in errors
+                li(class="text-center bg-amber-100 p-4 rounded-md shadow-md")
+                    h3(class="font-bold text-amber-900") Attention !
+                    p!= error.msg
+
+    form(method="POST").my-4
+        section(class="lg:grid-cols-9").grid-cols-1.grid-rows-1.grid.gap-4.my-12
+            div(class="lg:col-span-2 md:col-start-2")
+                h2 À propos de vous
+                p
+                    | Pour en savoir un peu plus sur vous, merci de remplir ces quelques
+                    | informations. Aucune n'est obligatoire, vous pouvez utiliser un pseudonyme
+                    | ou remplir "Anonyme" dans la case <em class="text-indigo-600">"Votre Nom"</em>
+            
+            div(class="md:col-span-4 md:col-end-9")
+                div.field-group.flex.flex-col.mb-2
+                    label(for="name").font-bold.mb-1 Votre Nom :
+                    input#name(class= "p-2 border-b-2 border-indigo-300 bg-white" type='text' placeholder='Anonyme' name='name' required value=(undefined===testimony ? '' : testimony.name))
+                div.field-group.flex.flex-col.mb-2
+                    label(for="age").font-bold.mb-1 Votre Age :
+                    input#age(class= "p-2 border-b-2 border-indigo-300 bg-white" type='number' placeholder='18' min="6" max="130" name='age' value=(undefined===testimony ? '' : testimony.age))
+                    label(for="gender").font-bold.mb-1 Votre Genre :
+                    select#gender.form-control(name='gender').p-2.border-b-2.border-indigo-300.bg-white
+                        option(value='')  
+                        each val in ["Femme", 'Homme', "Autre"]
+                            if undefined===testimony || testimony.gender!=val
+                                option(value=val)= val
+                            else
+                                option(value=val selected)= val
+                div.field-group.flex.flex-col.mb-2.relative(onclick="event.stopImmediatePropagation()")
+                    label(for="city").font-bold.mb-1 Votre Commune / Ville / Village :
+                    input#city(placeholder="ex. Paris" type="text" value=(undefined===testimony_city ? '' : testimony_city) name='city' onkeyUp="onkeyUp(event)").p-2.border-b-2.border-indigo-300.bg-white
+                    ul#dropdown.w-full.border-2.border-indigo-100.bg-white.absolute.hidden.max-h-60.mt-18.shadow-lg.rounded-sm.overflow-auto
+                        for city, index in city_names
+                            li(class="border-b-2 border-indigo-100 p-4 cursor-pointer hover:bg-indigo-100 transition-all" id=city_values[index] onclick='selectOption("'+ city_values[index] +'", "'+ city +'", "city")')= city
+        
+        hr.text-indigo-200.px-12
+        
+        section(class="lg:grid-cols-9").grid-cols-1.grid-rows-1.grid.gap-4.my-12
+            div(class="lg:col-span-2 md:col-start-2")
+                h2 Ce que vous souhaitez dire
+                p
+                    | Votre témoignage doit faire au minimum 40 caractères. Chaque témoignage est 
+                    | lu par notre équipe qui, <em class="text-indigo-600">après modération</em>, se chargera de le rendre public 
+                    | ou non sur la plateforme #NOM DU SITE PRINCIPAL#
+            
+            div(class="md:col-span-4 md:col-end-9")
+                div.field-group.flex.flex-col.mb-2
+                    label(for="testimony").font-bold.mb-1 Votre témoignage :
+                    textarea#testimony.form-control(placeholder="Voilà ce qu'il m'est arrivé-e..." name='testimony' value='' rows="12" required).p-2.border-b-2.border-indigo-300.bg-white
+        
+        hr.text-indigo-200.px-12
+        
+        section(class="lg:grid-cols-9").grid-cols-1.grid-rows-1.grid.gap-4.my-12
+            div(class="lg:col-span-2 md:col-start-2")
+                h2 On reste en contact ?
+                p
+                    | Vous souhaitez être recontacté pour en partager plus ? Vous pouvez laisser votre numéro de téléphone
+                    | ou votre adresse mail.
+            
+            div(class="md:col-span-4 md:col-end-9")
+                div.field-group.flex.flex-col.mb-2
+                    label(for="mail").font-bold.mb-1 Votre courriel :
+                    input#mail.form-control(type="email" placeholder="monemail@domaine.fr" name='email' value='').p-2.border-b-2.border-indigo-300.bg-white
+                div.field-group.flex.flex-col.mb-2
+                    label(for="tel").font-bold.mb-1 Votre numéro de téléphone :
+                    input#tel.form-control(type="tel" placeholder="+336xxxxxxxx" name='tel' value='').p-2.border-b-2.border-indigo-300.bg-white.relative.inline-block.autocomplete
+        
+        hr.text-indigo-200.px-12
+        
+        section(class="lg:grid-cols-9").grid-cols-1.grid-rows-1.grid.gap-4.my-12
+            div(class="lg:col-span-4 md:col-start-2")
+                h2 Dernière étape !
+                p
+                    | Si vous avez rempli tout ce que vous souhaitiez remplir, il ne nous reste plus qu'à vous informer :
+                    br
+                    | Les données récoltées sont utilisées essentiellement pour l'affichage des témoignages ou pour vous recontacter 
+                    | afin d'avoir plus d'informations concernant votre témoignage. Pour plus d'informations sur l'utilisation de vos
+                    | données personnelles ou pour l'exercice de vos droits, rendez vous sur la page 
+                    | <a href="#" class="text-indigo-600 underline hover:text-indigo-300"> RGPD </a>
+            
+            div(class="md:col-span-2 md:col-end-9 align-middle")
+                button(type="submit").peuplier-action-btn.peuplier-primary Envoyer mon témoignage 
+    
+    
+

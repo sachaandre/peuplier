@@ -1,7 +1,29 @@
 doctype html
-html
+html(lang="fr")
   head
+    meta(charset="utf-8")
+    meta(name="viewport", content="width=device-width, initial-scale=0.86, maximum-scale=5.0, minimum-scale=0.86")
     title= title
+    link(rel="preconnect" href="https://fonts.bunny.net")
+    link(href="https://fonts.bunny.net/css?family=dosis:200,400,700|eczar:400,600,700" rel="stylesheet")
     link(rel='stylesheet', href='/stylesheets/style.css')
-  body
+    script(src="/javascripts/nav.js" defer)
+  body.max-w-320.p-6.bg-indigo-50
+    header
+      nav.flex.items-center.justify-between.flex-wrap.relative
+        a(href="/") Mon Logo 
+        div
+          button(data-collapse-toggle="#main-nav").p-4
+            span.sr-only Ouvrir le Menu 
+            svg(aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14").w-5.h-5
+              path(id="burger_path" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15")
+        div#main-nav(class="hidden relative my-2 bg-indigo-400 w-full z-10 border border-indigo-300 rounded-sm shadow-md")
+          ul(class="bg-white mt-4 font-medium flex flex-row flex-1 justify-between rounded-b-sm")
+            li.flex-1.text-center
+              a(href="/temoignages" class="hover:bg-indigo-400 hover:text-indigo hover:text-white w-full h-full inline-block p-4 transition rounded-bl-sm") Témoignages 
+            li.flex-1.text-center
+              a(href="/stats" class="hover:bg-indigo-400 hover:text-indigo hover:text-white w-full h-full inline-block p-4 transition") Stats
+            li.flex-1.text-center
+              a(href="/user_settings" class="hover:bg-indigo-400 hover:text-indigo hover:text-white w-full h-full inline-block p-4 transition rounded-br-sm") Utilisateurs
+            
     block content

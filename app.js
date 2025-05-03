@@ -7,6 +7,7 @@ require('dotenv').config();
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var testimonyRouter = require('./routes/testimony');
 
 var app = express();
 
@@ -22,6 +23,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/', testimonyRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -47,7 +49,7 @@ const mongoose = require('mongoose');
 // Included because it removes preparatory warnings for Mongoose 7.
 // See: https://mongoosejs.com/docs/migrating_to_6.html#strictquery-is-removed-and-replaced-by-strict
 mongoose.set("strictQuery", false);
-const mongoDB = $SCALINGO_MONGO_URL;
+//const mongoDB = $SCALINGO_MONGO_URL;
 const mongoDBDev = "mongodb://localhost:27017/Peuplier_DB_Dev"
 main().catch((err) => console.log(err));
 async function main() {

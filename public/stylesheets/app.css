@@ -1,0 +1,59 @@
+@import "tailwindcss";
+@config "../../tailwind.config.js";
+
+@theme{
+    --font-sans: 'Dosis', ui-sans-serif, sans-serif;
+    --font-serif: 'Eczar', ui-serif, serif;
+}
+
+@layer components {
+    h1 {
+        font-size: var(--text-4xl);
+        font-family: var(--font-serif);
+        color: var(--color-indigo-700);
+    }
+
+    h2 {
+        font-size: var(--text-2xl);
+        font-family: var(--font-serif);
+        color: var(--color-indigo-900);
+    }
+
+    /* Custom action button */
+    .peuplier-action-btn{
+        text-decoration: none;
+        padding: --spacing(2) --spacing(4);
+        margin-top: --spacing(2);
+        display: inline-block;
+        border-radius: var(--radius-sm);
+        transition-property: all;
+        transition-timing-function: var(--default-transition-timing-function); /* cubic-bezier(0.4, 0, 0.2, 1) */
+        transition-duration: var(--default-transition-duration);
+    }
+
+    .peuplier-action-btn:hover, .peuplier-action-btn:focus{
+        transition-property: all;
+        transition-timing-function: var(--default-transition-timing-function); /* cubic-bezier(0.4, 0, 0.2, 1) */
+        transition-duration: var(--default-transition-duration);
+    }
+
+    .peuplier-action-btn:active{
+        transition-property: all;
+        transition-timing-function: var(--default-transition-timing-function); /* cubic-bezier(0.4, 0, 0.2, 1) */
+        transition-duration: var(--default-transition-duration);
+    }
+
+    .peuplier-primary{ background-color: var(--color-indigo-500); color: var(--color-indigo-50) }
+    .peuplier-primary:hover, .peuplier-primary:focus{ background-color: var(--color-indigo-600); }
+    .peuplier-primary:active{ background-color: var(--color-indigo-800); }
+
+    .peuplier-secondary{ background-color: var(--color-indigo-100); color: var(--color-indigo-950) }
+    .peuplier-secondary:hover, .peuplier-secondary:focus{ background-color: var(--color-indigo-200); }
+    .peuplier-secondary:active{ background-color: var(--color-indigo-300); }
+
+    .peuplier-danger{ background-color: var(--color-rose-700); color: var(--color-rose-50) }
+    .peuplier-danger:hover, .peuplier-danger:focus{ background-color: var(--color-rose-800); }
+    .peuplier-danger:active{ background-color: var(--color-rose-900); }
+}
+
+body { margin: 0 auto }

@@ -1,5 +1,15 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  div
+    h1= title
+    section(class="grid gap-6 lg:grid-cols-3")
+      article.bg-white.rounded-md.shadow-md.p-4
+        h2 À propos de Peuplier
+        p Peuplier est une application de recueil et de gestion de témoignages sur une thématique particulière.
+        p L'application recueille des témoignages pouvant être anonymes et génère, si les données sont remplies,
+          | des statistiques concernant les témoignages recueillis.
+      article.bg-white.rounded-md.shadow-md.p-4
+        h2 Lire les témoignages existants
+        p L'ensemble des témoignages existants sont disponibles ici.
+        a.peuplier-action-btn.peuplier-secondary(href="/temoignages") Lire les témoignages
