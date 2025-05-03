@@ -10,8 +10,10 @@ html(lang="fr")
     script(src="/javascripts/nav.js" defer)
   body.max-w-320.p-6.bg-indigo-50
     header
-      nav.flex.items-center.justify-between.flex-wrap.relative
-        a(href="/") Mon Logo 
+      nav.flex.items-center.justify-between.flex-wrap.relative.h-18.px-8.rounded-md.shadow-md.mb-4.bg-white
+        a(href="/" class="flex flex-row flex-nowrap max-h-12 h-9")
+          img(src="/images/peuplier.png" class="h-full")
+          span(class="font-serif text-black ml-2 text-lg self-center") Peuplier
         div
           button(data-collapse-toggle="#main-nav").p-4
             span.sr-only Ouvrir le Menu 
