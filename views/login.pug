@@ -1,0 +1,19 @@
+extends layout 
+
+block content
+    section(class="text-center").mt-6
+        h1 Se connecter
+        if error
+            p(class="text-center mx-auto my-6 p-8 bg-red-300 rounded-md w-fit")= error
+        if flash
+            p(class="text-center mx-auto my-6 p-8 bg-red-300 rounded-md w-fit")= flash
+        form(method="POST" class="m-auto mt-3 w-96")
+            div.field-group.flex.flex-col.mb-2
+                label(for="username").font-bold.mb-1 Votre nom d'utilisateur
+                input#name(class= "p-2 border-b-2 border-indigo-300 bg-white" type='text' placeholder='user' name='username' required)
+            div.field-group.flex.flex-col.mb-2
+                label(for="pword").font-bold.mb-1 Votre mot de passe : 
+                input#name(class= "p-2 border-b-2 border-indigo-300 bg-white" type='password' placeholder='Mon mot de passe' name='password' required)
+            div.field-group.flex.flex-col.mb-2
+                button(type="submit").peuplier-action-btn.peuplier-primary Se connecter
+                
