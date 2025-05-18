@@ -44,12 +44,13 @@ app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: true,
-  cookie: { secure: process.env.DEV_ENV ? false : true }
+  cookie: { secure: process.env.DEV_ENV ? false : true, maxAge: 90000000 }
 }));
 
 //Initialize & config passport
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(passport.authenticate('session'))
 
 passport.use(new LocalStrategy(
   async (username, password, done) => {
@@ -64,8 +65,6 @@ passport.use(new LocalStrategy(
           }
           
           return done(null, user)
-
-          
       }
 
   }
@@ -73,8 +72,9 @@ passport.use(new LocalStrategy(
 
 passport.serializeUser((user, done) => {
   done(null, user.id);
-  });
- passport.deserializeUser(async (id, done) => {
+});
+
+passport.deserializeUser(async (id, done) => {
   const user = await User.findOne({_id: id})
   done(null, user);
 });

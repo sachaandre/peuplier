@@ -19,4 +19,29 @@ const UserSchema = new Schema({
     }
 });
 
+UserSchema.virtual("url").get(function () {
+  // We don't use an arrow function as we'll need the this object
+  return `/utilisateurs/${this._id}`;
+});
+
+UserSchema.statics = {
+    emailUsed(email){
+        return this.findOne({email: email}).then(
+            result => {
+                console.log(result)
+                if(result) throw new Error("Email déjà utilisé")
+            }
+        )
+    },
+
+    usernameUsed(username){
+        return this.findOne({name: username}).then(
+            result => {
+                console.log(result)
+                if(result) throw new Error("Username déjà utilisé")
+            }
+        )
+    }
+}
+
 module.exports = mongoose.model("User", UserSchema);

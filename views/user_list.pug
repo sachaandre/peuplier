@@ -1,0 +1,30 @@
+extends layout 
+
+block content
+    h1 Liste des utilisateurs
+    if currentUser_status
+        p.bg-yellow-200.p-4.rounded-md.my-4 Vous êtes actuellement un : #{currentUser_status}
+    section(id="action" class="flex justify-end mt-4")
+        a(class="peuplier-action-btn peuplier-primary" href="/utilisateurs/nouveau") Créer un nouvel utilisateur
+    
+    if user_list.length
+        section(id="user_table" class="relative flex flex-col w-full my-4 rounded-md")
+            table(class="w-full bg-white border-collapse table-auto border border-indigo-500 rounded-md")
+                thead
+                    tr
+                        th(scope="col" class="") Nom d'utilisateur
+                        th(scope="col" class="") Adresse courriel 
+                        th(scope="col" class="") Statut
+                        th(scope="col" class=" ")    
+                tbody
+                    each val in user_list
+                        tr(class="text-center") 
+                            td(class="bg-indigo-300 border border-indigo-500 p-4")= val.name
+                            if val.email 
+                                td(class="border border-indigo-500")= val.email
+                            else
+                                td(class="border p-4 border-indigo-500") Pas de courriel renseigné
+                            td(class="border bg-indigo-300 border-indigo-500 p-4")= val.status
+                            td(class="border border-indigo-500")
+                                if currentUser_status === "Admin"
+                                    a(href=val.url+"/editer" class="peuplier-action-btn peuplier-secondary" style="margin-top: 0") Éditer

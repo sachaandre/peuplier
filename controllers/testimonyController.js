@@ -91,7 +91,6 @@ exports.testimony_create_post = [
             let city_split = req.body.city.split(/( \((\d*|\d[A-Z])\))/g)
 
             //Set the city name
-            console.log(city_split);
             let city_name;
             city_name = city_split[0];
 
@@ -120,8 +119,6 @@ exports.testimony_create_post = [
             
         }
 
-        console.log(testimony.city);
-
         if (!errors.isEmpty()){
             // There are errors. Render form again with sanitized values/errors messages.
             res.render("testimony_form", {
@@ -135,11 +132,12 @@ exports.testimony_create_post = [
             return;
         } else {
             await testimony.save();
-            res.redirect("temoignages");
+            res.render("thanks")
         }
     })
     
 ];
+
 
 exports.testimony_delete_post = asyncHandler(async (req, res, next) => {
     await Testimony.findByIdAndDelete(req.params.id);

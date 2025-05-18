@@ -13,7 +13,7 @@ router.get('/', requireAuth, function(req, res, next) {
 
 
 /* GET STATS */
-router.get(["/stats", "/user_settings"], function(req, res, next) {
+router.get(["/stats"], function(req, res, next) {
   res.render("construction");
 })
 

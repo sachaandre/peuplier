@@ -1,0 +1,36 @@
+extends layout
+
+block content
+    section(class="text-center").mt-6
+        h1= title
+        if errors
+            ul(class="flex justify-center")
+                for error in errors
+                    li(class="text-center bg-amber-100 p-4 rounded-md shadow-md")
+                        h3(class="font-bold text-amber-900") Attention !
+                        p!= error.msg
+
+        form(method="POST" class="m-auto mt-3 w-96")
+            div.field-group.flex.flex-col.mb-2
+                label(for="name").font-bold.mb-1 Nom d'utilisateur
+                input#name(class= "p-2 border-b-2 border-indigo-300 bg-white" type='text' placeholder='user' name='username' required value= user && user.name ? user.name : "")
+            div.field-group.flex.flex-col.mb-2
+                label(for="pword").font-bold.mb-1 Mot de passe
+                input#pword(class= "p-2 border-b-2 border-indigo-300 bg-white" type='password' placeholder='Mon mot de passe' name='password' required)
+            div.field-group.flex.flex-col.mb-2
+                label(for="pword2").font-bold.mb-1 Confirmer le mot de passe
+                input#pword2(class= "p-2 border-b-2 border-indigo-300 bg-white" type='password' placeholder='Mon mot de passe' name='password_2' required)
+            div.field-group.flex.flex-col.mb-2
+                label(for="email").font-bold.mb-1 Adresse courriel
+                input#email(class= "p-2 border-b-2 border-indigo-300 bg-white" type='mail' placeholder='name@domaine.fr' name='email' required value= user && user.email ? user.email : "")
+            div.field-group.flex.flex-col.mb-2
+                label(for="status").font-bold.mb-1 Statut de l'utilisateur : 
+                    select#status(name='gender').p-2.border-b-2.border-indigo-300.bg-white
+                        option(value='')  
+                        each val in ["User", 'Admin']
+                            if undefined===user || user.gender!=val
+                                option(value=val)= val
+                            else
+                                option(value=val selected)= val
+            div.field-group.flex.flex-col.mb-2
+                button(type="submit").peuplier-action-btn.peuplier-primary= action

@@ -1,0 +1,9 @@
+extends iframe_view 
+
+block content
+    section(class="text-center").mt-6
+        h1 Merci pour votre témoignage
+        p Votre témoignage a bien été envoyé à notre plateforme. Merci pour votre parole précieuse.
+
+        if allow_rewrite
+            a(href="temoigner" class="peuplier-action-btn peuplier-secondary") Envoyer un nouveau témoignage
