@@ -10,8 +10,13 @@ const { body, validationResult } = require("express-validator");
 
 const { OsunyOwl, OsunyUtility } = require("osuny-owl");
 
-const owl = new OsunyOwl("f9540978-5495-48ea-88e9-bb6d89ed15fe", "https://sachaandre.osuny.org/api/osuny/v1/")
-owl.addCategory_id("ff66fe54-56af-4bd8-919b-0861e9fef404") // ajout de la catégorie API du site
+/**
+ * Configuration du site internet
+ * Besoin de rendre ça accessible par UI
+ */
+
+const owl = new OsunyOwl(process.env.OSUNY_WEBSITE_ID, "https://sachaandre.osuny.org/api/osuny/v1/")
+owl.addCategory_id(process.env.OSUNY_CATEGORY_ID) // ajout de la catégorie API du site
 
 
 
