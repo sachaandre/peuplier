@@ -115,6 +115,7 @@ main().catch((err) => console.log(err));
 async function main() {
   if (process.env.CURRENT_ENV == "dev") await mongoose.connect(mongoDBDev);
   if (process.env.CURRENT_ENV == "prod") await mongoose.connect(mongoDB);
+  console.log("Connected to DB!")
 }
 
 
