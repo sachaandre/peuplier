@@ -109,7 +109,7 @@ const user = require('./models/user');
 // Included because it removes preparatory warnings for Mongoose 7.
 // See: https://mongoosejs.com/docs/migrating_to_6.html#strictquery-is-removed-and-replaced-by-strict
 mongoose.set("strictQuery", false);
-const mongoDB = process.env.SCALINGO_MONGO_URL;
+const mongoDB = process.env.ATLAS_MONGO_URL;
 const mongoDBDev = "mongodb://localhost:27017/Peuplier_DB_Dev"
 main().catch((err) => console.log(err));
 async function main() {
