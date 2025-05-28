@@ -8,6 +8,13 @@ const Testimony = require("../models/testimony");
 const asyncHandler = require("express-async-handler");
 const { body, validationResult } = require("express-validator");
 
+const { OsunyOwl, OsunyUtility } = require("osuny-owl");
+
+const owl = new OsunyOwl("f9540978-5495-48ea-88e9-bb6d89ed15fe", "https://sachaandre.osuny.org/api/osuny/v1/")
+owl.addCategory_id("ff66fe54-56af-4bd8-919b-0861e9fef404") // ajout de la catégorie API du site
+
+
+
 exports.testimony_index = asyncHandler(async (req, res, next) => {
     const allTestimonies = await Testimony.find()
         .sort({ created_at: "desc" })
@@ -160,7 +167,60 @@ exports.testimony_draft_post = asyncHandler(async (req, res, next) => {
 
 exports.testimony_publish_post = asyncHandler(async (req, res, next) => {
     const testimony = await Testimony.findById(req.params.id).exec();
+    let migrationId = "testimony_" + testimony._id.toString()
+
+    let datatable = [
+        {
+            "cells": [
+                "Genre",
+                testimony.gender == "" ? "Non renseigné" : testimony.gender
+            ]
+        },
+        {
+            "cells": [
+                "Commune",
+                testimony.city.name ? `${testimony.city.name} (${testimony.city.department.code}) ` : "Non renseignée"
+            ]
+        },
+        {
+            'cells': [
+                "Age",
+                testimony.age ? testimony.age : "Non renseigné"
+            ]
+        }
+    ]
+
+    let dataheader = ["Libellé", "Données"]
+
+    const testimonyContentBlock = OsunyUtility.createChapter(
+        testimony.testimony,
+        migrationId,
+        0
+    )
+
+    const testimonyDataBlock = OsunyUtility.createDatatable(
+        datatable,
+        dataheader,
+        "testimony_metadata_" + testimony._id,
+        1,
+        "Métadonnées du témoignage"
+    )
+
+    const postBlocks = OsunyUtility.composePost(testimonyContentBlock, testimonyDataBlock)
+
+    const post = OsunyUtility.createPost(
+        "Témoignage de " + testimony.name,
+        "testimony_post_"+ testimony._id,
+        postBlocks,
+        owl._category_ids,
+        false
+    )
+
+    owl.postToOsuny(post)
+
     testimony.state = "Published";
+    testimony.published_on_Osuny = true;
     testimony.save();
     res.redirect("/temoignages");
+
 });

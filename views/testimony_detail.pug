@@ -4,17 +4,17 @@ block content
     h1 Détail du témoignage de : #{testimony.name}
     section.mt-4
         div(class="flex gap-3 justify-end flex-col sm:flex-row")
-            unless testimony.state=="Published"
+            unless testimony.state=="Published" || testimony.state=="Archived" || testimony.published_on_Osuny == true
                 form(method="POST" action= testimony.url + "/publish")
                     button.peuplier-action-btn.peuplier-secondary(type="submit") Publier sur Osuny
             unless testimony.state=="Archived"
                 form(method="POST" action= testimony.url + "/archive")
                     button.peuplier-action-btn.peuplier-secondary(type="submit") Archiver
-            unless testimony.state=="Draft"
+            unless testimony.state=="Draft" || testimony.state == "Published"
                 form(method="POST" action= testimony.url + "/draft")
                     button.peuplier-action-btn.peuplier-secondary(type="submit")  Mettre en brouillon
             form(method="POST" action= testimony.url + "/delete")
-                button.peuplier-action-btn.peuplier-danger(type="submit" onclick="deleteTestimony(event)") Supprimer le témoignage
+                button.peuplier-action-btn.peuplier-danger(type="submit" onclick="deleteTestimony(event)") Supprimer le témoignage (local)
 
     section(class="grid lg:grid-cols-7 gap-6 mt-6")
         article(class="lg:col-span-2 bg-white border-2 border-indigo-200 rounded-md shadow-md p-4 h-fit")
@@ -36,7 +36,7 @@ block content
             else
                 p <strong> Genre : </strong> #{testimony.gender}
             //Âge
-            if testimony.age || testimony.age == null
+            unless testimony.age
                 p <strong> Age : </strong> Non renseigné
             else
                 p <strong> Age : </strong> #{testimony.age}

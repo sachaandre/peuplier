@@ -41,6 +41,7 @@ const TestimonySchema = new Schema({
     age: { type: Number },
     mail: { type: String },
     tel: { type: String },
+    published_on_Osuny: { type: Boolean, default: false },
 });
 
 // Virtual for bookinstance's URL
