@@ -36,7 +36,7 @@ const mongoDB = process.env.ATLAS_MONGO_URL;
 const mongoDBDev = "mongodb://localhost:27017/Peuplier_DB_Dev"
 main().catch((err) => console.log(err));
 async function main() {
-  if (process.env.CURRENT_ENV == "dev") await mongoose.connect(mongoDB);
+  if (process.env.CURRENT_ENV == "dev") await mongoose.connect(mongoDBDev);
   if (process.env.CURRENT_ENV == "prod") await mongoose.connect(mongoDB);
   //USERS INIT
   var user_controller = require("./controllers/userConstroller")
