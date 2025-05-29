@@ -37,7 +37,14 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(helmet());
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      "script-src": ["'self'"],
+      "script-src": ["'self'"]
+    }
+  }
+}));
 
 //let secureCookie = process.env.CURRENT_ENV === "dev" ? false : true;
 //console.log("ENV : " + process.env.CURRENT_ENV)
