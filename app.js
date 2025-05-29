@@ -39,12 +39,16 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(helmet());
 
+let secureCookie = process.env.CURRENT_ENV === "dev" ? false : true;
+console.log("ENV : " + process.env.CURRENT_ENV)
+console.log(secureCookie)
+
 //Session configuration
 app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: true,
-  cookie: { secure: process.env.CURRENT_ENV == "dev" ? false : true, maxAge: 90000000 }
+  cookie: { secure: secureCookie, maxAge: 90000000 }
 }));
 
 //Initialize & config passport
