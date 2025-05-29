@@ -23,6 +23,24 @@ var testimonyRouter = require('./routes/testimony');
 //APP
 var app = express();
 
+// Database
+// Import Mongoose module
+const mongoose = require('mongoose');
+const user = require('./models/user');
+
+// Set `strictQuery: false` to globally opt into filtering by properties that aren't in the schema
+// Included because it removes preparatory warnings for Mongoose 7.
+// See: https://mongoosejs.com/docs/migrating_to_6.html#strictquery-is-removed-and-replaced-by-strict
+mongoose.set("strictQuery", false);
+const mongoDB = process.env.ATLAS_MONGO_URL;
+const mongoDBDev = "mongodb://localhost:27017/Peuplier_DB_Dev"
+main().catch((err) => console.log(err));
+async function main() {
+  if (process.env.CURRENT_ENV == "dev") await mongoose.connect(mongoDBDev);
+  if (process.env.CURRENT_ENV == "prod") await mongoose.connect(mongoDB);
+  console.log("Connected to DB!")
+}
+
 
 //USERS INIT
 var user_controller = require("./controllers/userConstroller")
@@ -100,23 +118,6 @@ app.use(function(err, req, res, next) {
   err.status == 404 ? res.redirect('/') : res.render('error');
 });
 
-// Database
-// Import Mongoose module
-const mongoose = require('mongoose');
-const user = require('./models/user');
-
-// Set `strictQuery: false` to globally opt into filtering by properties that aren't in the schema
-// Included because it removes preparatory warnings for Mongoose 7.
-// See: https://mongoosejs.com/docs/migrating_to_6.html#strictquery-is-removed-and-replaced-by-strict
-mongoose.set("strictQuery", false);
-const mongoDB = process.env.ATLAS_MONGO_URL;
-const mongoDBDev = "mongodb://localhost:27017/Peuplier_DB_Dev"
-main().catch((err) => console.log(err));
-async function main() {
-  if (process.env.CURRENT_ENV == "dev") await mongoose.connect(mongoDBDev);
-  if (process.env.CURRENT_ENV == "prod") await mongoose.connect(mongoDB);
-  console.log("Connected to DB!")
-}
 
 
 
