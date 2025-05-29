@@ -38,10 +38,10 @@ main().catch((err) => console.log(err));
 async function main() {
   if (process.env.CURRENT_ENV == "dev") await mongoose.connect(mongoDBDev);
   if (process.env.CURRENT_ENV == "prod") await mongoose.connect(mongoDB);
-  //USERS INIT
+}
+//USERS INIT
   var user_controller = require("./controllers/userConstroller")
   user_controller.createFirstUser();
-}
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
