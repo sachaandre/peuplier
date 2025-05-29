@@ -60,7 +60,7 @@ app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: true,
-  cookie: { secure: process.env.DEV_ENV ? false : true, maxAge: 90000000 }
+  cookie: { secure: process.env.CURRENT_ENV == "dev"　? false : true, maxAge: 90000000 }
 }));
 
 //Initialize & config passport
