@@ -42,7 +42,7 @@ app.use(helmet({
     directives: {
       "default-src": ["'self'"],
       "script-src": ["'self'"],
-      "script-src-attr": ["'self'"]
+      "script-src-attr": ["'none'"]
     }
   }
 }));

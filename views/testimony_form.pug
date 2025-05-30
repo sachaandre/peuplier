@@ -35,12 +35,12 @@ block content
                                 option(value=val)= val
                             else
                                 option(value=val selected)= val
-                div.field-group.flex.flex-col.mb-2.relative(onclick="event.stopImmediatePropagation()")
+                div#citydiv.field-group.flex.flex-col.mb-2.relative
                     label(for="city").font-bold.mb-1 Votre Commune / Ville / Village :
-                    input#city(placeholder="ex. Paris" type="text" value=(undefined===testimony_city ? '' : testimony_city) name='city' onkeyUp="onkeyUp(event)").p-2.border-b-2.border-indigo-300.bg-white
+                    input#city(placeholder="ex. Paris" type="text" value=(undefined===testimony_city ? '' : testimony_city) name='city').p-2.border-b-2.border-indigo-300.bg-white
                     ul#dropdown.w-full.border-2.border-indigo-100.bg-white.absolute.hidden.max-h-60.mt-18.shadow-lg.rounded-sm.overflow-auto
                         for city, index in city_names
-                            li(class="border-b-2 border-indigo-100 p-4 cursor-pointer hover:bg-indigo-100 transition-all" id=city_values[index] onclick='selectOption("'+ city_values[index] +'", "'+ city +'", "city")')= city
+                            li(class="border-b-2 border-indigo-100 p-4 cursor-pointer hover:bg-indigo-100 transition-all" id=city_values[index] data-option1=city_values[index] data-option2=city data-option3="city")= city
         
         hr.text-indigo-200.px-12
         

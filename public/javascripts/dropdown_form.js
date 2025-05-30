@@ -8,6 +8,21 @@
 //         city_value.push(city.nom_sans_accent);
 //         city_name.push(city.nom_standard);
 //     });
+window.onload = () => {
+    let cityEl = document.getElementById("city")
+    if (cityEl) cityEl.addEventListener("keyup", onkeyUp)
+
+    let cityDiv = document.getElementById("citydiv")
+    if (cityDiv) cityDiv.addEventListener("click", event.stopImmediatePropagation())
+
+    let dropdownLiEl = document.querySelectorAll("#dropdown li")
+    dropdownLiEl.forEach(el => {
+        el.addEventListener("click", () => { 
+            selectOption(el.dataset.option1,el.dataset.option2,el.dataset.option3) 
+        })
+    })
+}
+
 
 function onkeyUp(e){
     let keyword = (e.target.value);
@@ -69,4 +84,35 @@ function sanitizeKeyword(keyword){
     sanitizedKeyword = sanitizedKeyword.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 
     return sanitizedKeyword;
+}
+
+
+function listAllEventListeners() {
+  const allElements = Array.prototype.slice.call(document.querySelectorAll('*'));
+  allElements.push(document);
+  allElements.push(window);
+
+  const types = [];
+
+  for (let ev in window) {
+    if (/^on/.test(ev)) types[types.length] = ev;
+  }
+
+  let elements = [];
+  for (let i = 0; i < allElements.length; i++) {
+    const currentElement = allElements[i];
+    for (let j = 0; j < types.length; j++) {
+      if (typeof currentElement[types[j]] === 'function') {
+        elements.push({
+          "node": currentElement,
+          "type": types[j],
+          "func": currentElement[types[j]].toString(),
+        });
+      }
+    }
+  }
+
+  return elements.sort(function(a,b) {
+    return a.type.localeCompare(b.type);
+  });
 }
