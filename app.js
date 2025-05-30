@@ -39,13 +39,16 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(helmet({
   contentSecurityPolicy: {
+    useDefaults: false,
     directives: {
       "default-src": ["'self'"],
       "script-src": ["'self'"],
       "script-src-attr": ["'none'"]
     }
-  }
+  },
+  xFrameOptions: false
 }));
+
 
 //let secureCookie = process.env.CURRENT_ENV === "dev" ? false : true;
 //console.log("ENV : " + process.env.CURRENT_ENV)
