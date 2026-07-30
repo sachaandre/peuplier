@@ -1,3 +1,10 @@
 :root { color-scheme: light dark; }
 body { font-family: system-ui, sans-serif; margin: 2rem; line-height: 1.6; }
 main { max-width: 42rem; margin-inline: auto; }
+
+.field { margin-block: 1rem; display: flex; flex-direction: column; gap: 0.35rem; }
+.field label { font-weight: 500; }
+.field .option { font-weight: 400; flex-direction: row; gap: 0.4rem; }
+textarea { min-height: 8rem; }
+.errors { border: 1px solid #c0392b; background: #fdecea; color: #7b241c; padding: 0.75rem 1rem; border-radius: 6px; }
+button { padding: 0.6rem 1.2rem; cursor: pointer; }

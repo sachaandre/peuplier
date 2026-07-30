@@ -1,0 +1,37 @@
+<% layout("../layout.eta") %>
+<h1>Déposer un témoignage</h1>
+
+<% if (it.errors && it.errors.length) { %>
+  <ul class="errors">
+    <% it.errors.forEach(function (e) { %>
+      <li><%= e.label %> : ce champ est obligatoire.</li>
+    <% }) %>
+  </ul>
+<% } %>
+
+<form method="post" action="/temoigner">
+  <% it.fields.forEach(function (field) { %>
+    <div class="field">
+      <label for="<%= field.id %>"><%= field.label %><% if (field.required) { %> *<% } %></label>
+
+      <% if (field.fieldType === 'textarea') { %>
+        <textarea id="<%= field.id %>" name="<%= field.id %>"<% if (field.required) { %> required<% } %>><%= it.values[field.id] || '' %></textarea>
+
+      <% } else if (field.fieldType === 'radio') { %>
+        <% field.options.forEach(function (opt) { %>
+          <label class="option"><input type="radio" name="<%= field.id %>" value="<%= opt %>"<% if (it.values[field.id] === opt) { %> checked<% } %>> <%= opt %></label>
+        <% }) %>
+
+      <% } else if (field.fieldType === 'checkbox') { %>
+        <% field.options.forEach(function (opt) { %>
+          <label class="option"><input type="checkbox" name="<%= field.id %>" value="<%= opt %>"> <%= opt %></label>
+        <% }) %>
+
+      <% } else { %>
+        <input type="<%= field.fieldType === 'city' ? 'text' : field.fieldType %>" id="<%= field.id %>" name="<%= field.id %>" value="<%= it.values[field.id] || '' %>"<% if (field.required) { %> required<% } %>>
+      <% } %>
+    </div>
+  <% }) %>
+
+  <button type="submit">Envoyer</button>
+</form>

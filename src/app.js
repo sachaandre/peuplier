@@ -7,6 +7,7 @@ import { Eta } from 'eta';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 import { config } from './config.js';
+import { publicRoutes } from './routes/public.js';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const rootDir = join(here, '..');
@@ -46,6 +47,8 @@ export async function buildApp() {
 
   // Route d'accueil provisoire, remplacée par les vraies routes plus tard.
   app.get('/', (request, reply) => reply.view('home.eta', { title: 'Peuplier — accueil' }));
+
+  await app.register(publicRoutes)
 
   return app;
 }

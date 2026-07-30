@@ -1,0 +1,4 @@
+<% layout("../layout.eta") %>
+<h1>Merci</h1>
+<p>Votre témoignage a bien été enregistré.</p>
+<p><a href="/temoigner">Déposer un autre témoignage</a></p>
