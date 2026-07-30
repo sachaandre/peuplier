@@ -1,0 +1,4 @@
+<% layout("../layout.eta") %>
+<h1>Accès refusé</h1>
+<p>Votre rôle ne vous permet pas d'accéder à cette page.</p>
+<p><a href="/admin">Retour au tableau de bord</a></p>

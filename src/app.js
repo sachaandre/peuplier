@@ -3,12 +3,16 @@ import Fastify from 'fastify';
 import fastifyStatic from '@fastify/static';
 import fastifyFormbody from '@fastify/formbody';
 import fastifyView from '@fastify/view';
+import fastifyCookie from '@fastify/cookie';
+import fastifySession from '@fastify/session';
+import fastifyRateLimit from '@fastify/rate-limit';
 import { Eta } from 'eta';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 import { config } from './config.js';
 import { publicRoutes } from './routes/public.js';
-import fastifyRateLimit from '@fastify/rate-limit';
+import { adminRoutes } from './routes/admin.js';
+
 
 const here = dirname(fileURLToPath(import.meta.url));
 const rootDir = join(here, '..');
@@ -29,6 +33,19 @@ export async function buildApp() {
       error: 'Too Many Requests',
       message: 'Trop de soumissions depuis votre connexion. Merci de réessayer plus tard.'
     })
+  });
+
+  // Sessions serveur pour l'espace admin (cookie signé, httpOnly).
+  await app.register(fastifyCookie);
+  await app.register(fastifySession, {
+    secret: config.sessionSecret,
+    cookie: {
+      httpOnly: true,
+      secure: config.isProd,
+      sameSite: 'lax',
+      maxAge: 1000 * 60 * 60 * 8
+    },
+    saveUninitialized: false
   });
 
   // Moteur de templates eta.
@@ -59,7 +76,8 @@ export async function buildApp() {
   // Route d'accueil provisoire, remplacée par les vraies routes plus tard.
   app.get('/', (request, reply) => reply.view('home.eta', { title: 'Peuplier — accueil' }));
 
-  await app.register(publicRoutes)
+  await app.register(publicRoutes);
+  await app.register(adminRoutes);
 
   return app;
 }

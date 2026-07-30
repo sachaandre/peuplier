@@ -1,0 +1,6 @@
+<% layout("../layout.eta") %>
+<h1>Tableau de bord</h1>
+<p>Connecté en tant que <strong><%= it.user.name %></strong> (<%= it.user.role %>).</p>
+<form method="post" action="/admin/logout">
+  <button type="submit">Se déconnecter</button>
+</form>
