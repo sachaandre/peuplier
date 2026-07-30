@@ -12,7 +12,7 @@ export async function publicRoutes(app) {
     })
   );
 
-  app.post('/temoigner', (request, reply) => {
+  app.post('/temoigner', { config: { rateLimit: { max: 5, timeWindow: '1 hour'} }}, (request, reply) => {
     const fields = getFields();
     const body = request.body ?? {};
     const { valid, errors, data } = validateSubmission(fields, body);

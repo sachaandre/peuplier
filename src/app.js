@@ -8,6 +8,7 @@ import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 import { config } from './config.js';
 import { publicRoutes } from './routes/public.js';
+import fastifyRateLimit from '@fastify/rate-limit';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const rootDir = join(here, '..');
@@ -15,10 +16,20 @@ const viewsDir = join(rootDir, 'views');
 const publicDir = join(rootDir, 'public');
 
 export async function buildApp() {
-  const app = Fastify({ logger: true });
+  const app = Fastify({ logger: true, trustProxy: config.isProd });
 
   // Parse les corps de formulaire (application/x-www-form-urlencoded).
   await app.register(fastifyFormbody);
+
+  // Limitation de débit : désactivée globalement, activée route par route via config.
+  await app.register(fastifyRateLimit, {
+    global: false,
+    errorResponseBuilder: () => ({
+      statusCode: 429,
+      error: 'Too Many Requests',
+      message: 'Trop de soumissions depuis votre connexion. Merci de réessayer plus tard.'
+    })
+  });
 
   // Moteur de templates eta.
   await app.register(fastifyView, {
