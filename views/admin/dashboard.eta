@@ -1,6 +1,25 @@
 <% layout("../layout.eta") %>
+<header class="admin-bar">
+  <strong><%= it.settings.campaign_name %></strong>
+  <nav>
+    <a href="/admin">Tableau de bord</a>
+    <a href="/admin/temoignages">Témoignages</a>
+    <% if (it.settings.site_url) { %>
+      <a href="<%= it.settings.site_url %>" target="_blank" rel="noopener">Voir le site</a>
+    <% } %>
+    <form method="post" action="/admin/logout" class="inline">
+      <button type="submit">Déconnexion</button>
+    </form>
+  </nav>
+</header>
+
 <h1>Tableau de bord</h1>
 <p>Connecté en tant que <strong><%= it.user.name %></strong> (<%= it.user.role %>).</p>
-<form method="post" action="/admin/logout">
-  <button type="submit">Se déconnecter</button>
-</form>
+
+<section class="counters">
+  <div class="counter"><span class="n"><%= it.counters.total %></span> témoignages au total</div>
+  <div class="counter"><span class="n"><%= it.counters.byState.draft %></span> en brouillon</div>
+  <div class="counter"><span class="n"><%= it.counters.byState.published %></span> publiés</div>
+  <div class="counter"><span class="n"><%= it.counters.byState.archived %></span> archivés</div>
+  <div class="counter"><span class="n"><%= it.counters.week %></span> cette semaine</div>
+</section>

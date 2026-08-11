@@ -1,0 +1,37 @@
+<% layout("../layout.eta") %>
+<header class="admin-bar">
+  <a href="/admin">← Tableau de bord</a>
+</header>
+
+<h1>Témoignages</h1>
+
+<nav class="filters">
+  <a href="/admin/temoignages"<% if (!it.state) { %> class="active"<% } %>>Tous</a>
+  <a href="/admin/temoignages?state=draft"<% if (it.state === 'draft') { %> class="active"<% } %>>Brouillons</a>
+  <a href="/admin/temoignages?state=published"<% if (it.state === 'published') { %> class="active"<% } %>>Publiés</a>
+  <a href="/admin/temoignages?state=archived"<% if (it.state === 'archived') { %> class="active"<% } %>>Archivés</a>
+</nav>
+
+<% if (it.items.length === 0) { %>
+  <p>Aucun témoignage pour ce filtre.</p>
+<% } else { %>
+  <ul class="testimony-list">
+    <% it.items.forEach(function (t) { %>
+      <li>
+        <span class="badge badge-<%= t.state %>"><%= t.state %></span>
+        <span class="date"><%= t.date %></span>
+        <p class="excerpt"><%= t.excerpt %></p>
+      </li>
+    <% }) %>
+  </ul>
+
+  <nav class="pagination">
+    <% if (it.page > 1) { %>
+      <a href="/admin/temoignages?page=<%= it.page - 1 %><%= it.state ? '&state=' + it.state : '' %>">← Précédent</a>
+    <% } %>
+    <span>Page <%= it.page %> / <%= it.pageCount %></span>
+    <% if (it.page < it.pageCount) { %>
+      <a href="/admin/temoignages?page=<%= it.page + 1 %><%= it.state ? '&state=' + it.state : '' %>">Suivant →</a>
+    <% } %>
+  </nav>
+<% } %>
