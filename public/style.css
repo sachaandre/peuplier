@@ -26,3 +26,22 @@ form.inline { display: inline; }
 .date { color: #666; margin-left: 0.5rem; font-size: 0.85rem; }
 .excerpt { margin-top: 0.5rem; }
 .pagination { display: flex; gap: 1rem; align-items: center; margin-block: 1.5rem; }
+
+.badge-to_review { background: #cfe2ff; color: #084298; }
+.badge-to_delete { background: #f8d7da; color: #842029; }
+.action-buttons { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.5rem; }
+.hint { color: #666; font-size: 0.85rem; margin-top: 0.75rem; }
+.history .timeline { list-style: none; padding: 0; }
+.history .timeline li { border-left: 2px solid #ccc; padding: 0.25rem 0 0.75rem 0.9rem; margin-left: 0.25rem; }
+.history .transition { margin-left: 0.5rem; }
+.history .by { color: #666; margin-left: 0.5rem; font-size: 0.85rem; }
+.history .note { margin: 0.25rem 0 0; font-style: italic; }
+
+.testimony-link { display: block; color: inherit; text-decoration: none; }
+.testimony-link:hover { opacity: 0.7; }
+.detail dt { font-weight: 600; margin-top: 1rem; }
+.detail dd { margin: 0.25rem 0 0; }
+.badge-private { background: #f8d7da; color: #721c24; margin-left: 0.5rem; }
+.actions { margin-top: 2rem; }
+.actions h2 { margin-bottom: 0.5rem; }
+button.danger { background: #c0392b; color: #fff; border: none; margin-top: 1rem; }

@@ -1,0 +1,70 @@
+<% layout("../layout.eta") %>
+<header class="admin-bar">
+  <a href="/admin/temoignages">← Liste des témoignages</a>
+</header>
+
+<h1>Témoignage</h1>
+<p>
+  <span class="badge badge-<%= it.testimony.state %>"><%= it.testimony.stateLabel %></span>
+  <span class="date">Reçu le <%= it.testimony.date %></span>
+</p>
+
+<dl class="detail">
+  <% it.fields.forEach(function (f) { %>
+    <dt>
+      <%= f.label %>
+      <% if (f.private) { %><span class="badge badge-private">privé</span><% } %>
+    </dt>
+    <dd><%= f.value %></dd>
+  <% }) %>
+</dl>
+
+<% if (it.geo) { %>
+  <h2>Données géographiques</h2>
+  <dl class="detail">
+    <% if (it.geo.department) { %><dt>Département</dt><dd><%= it.geo.department %></dd><% } %>
+    <% if (it.geo.region) { %><dt>Région</dt><dd><%= it.geo.region %></dd><% } %>
+    <% if (it.geo.epci) { %><dt>EPCI</dt><dd><%= it.geo.epci %></dd><% } %>
+  </dl>
+<% } %>
+
+<section class="actions">
+  <h2>Modération</h2>
+  <form method="post" action="/admin/temoignages/<%= it.testimony.id %>/etat">
+    <div class="field">
+      <label for="note">Motif (facultatif)</label>
+      <textarea id="note" name="note" rows="2" placeholder="Ex. : doublon, hors-sujet, à publier tel quel…"></textarea>
+    </div>
+    <div class="action-buttons">
+      <% it.transitions.forEach(function (t) { %>
+        <button type="submit" name="state" value="<%= t.value %>"><%= t.label %></button>
+      <% }) %>
+    </div>
+  </form>
+
+  <% if (it.canDelete) { %>
+    <form method="post" action="/admin/temoignages/<%= it.testimony.id %>/supprimer"
+          onsubmit="return confirm('Supprimer définitivement ce témoignage ? Cette action est irréversible.');">
+      <button type="submit" class="danger">Supprimer définitivement</button>
+    </form>
+  <% } %>
+  <p class="hint">La publication sur Osuny sera disponible à la phase dédiée.</p>
+</section>
+
+<section class="history">
+  <h2>Historique</h2>
+  <% if (it.events.length === 0) { %>
+    <p>Aucune action enregistrée.</p>
+  <% } else { %>
+    <ul class="timeline">
+      <% it.events.forEach(function (e) { %>
+        <li>
+          <span class="date"><%= e.date %></span>
+          <span class="transition"><%= e.fromLabel %> → <strong><%= e.toLabel %></strong></span>
+          <% if (e.by) { %><span class="by">par <%= e.by %></span><% } %>
+          <% if (e.note) { %><p class="note"><%= e.note %></p><% } %>
+        </li>
+      <% }) %>
+    </ul>
+  <% } %>
+</section>

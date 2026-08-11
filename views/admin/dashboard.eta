@@ -17,8 +17,10 @@
 <p>Connecté en tant que <strong><%= it.user.name %></strong> (<%= it.user.role %>).</p>
 
 <section class="counters">
-  <div class="counter"><span class="n"><%= it.counters.total %></span> témoignages au total</div>
+  <div class="counter"><span class="n"><%= it.counters.total %></span> au total</div>
   <div class="counter"><span class="n"><%= it.counters.byState.draft %></span> en brouillon</div>
+  <div class="counter"><span class="n"><%= it.counters.byState.to_review %></span> à valider</div>
+  <div class="counter"><span class="n"><%= it.counters.byState.to_delete %></span> à supprimer</div>
   <div class="counter"><span class="n"><%= it.counters.byState.published %></span> publiés</div>
   <div class="counter"><span class="n"><%= it.counters.byState.archived %></span> archivés</div>
   <div class="counter"><span class="n"><%= it.counters.week %></span> cette semaine</div>

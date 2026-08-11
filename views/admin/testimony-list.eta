@@ -8,6 +8,8 @@
 <nav class="filters">
   <a href="/admin/temoignages"<% if (!it.state) { %> class="active"<% } %>>Tous</a>
   <a href="/admin/temoignages?state=draft"<% if (it.state === 'draft') { %> class="active"<% } %>>Brouillons</a>
+  <a href="/admin/temoignages?state=to_review"<% if (it.state === 'to_review') { %> class="active"<% } %>>À valider</a>
+  <a href="/admin/temoignages?state=to_delete"<% if (it.state === 'to_delete') { %> class="active"<% } %>>À supprimer</a>
   <a href="/admin/temoignages?state=published"<% if (it.state === 'published') { %> class="active"<% } %>>Publiés</a>
   <a href="/admin/temoignages?state=archived"<% if (it.state === 'archived') { %> class="active"<% } %>>Archivés</a>
 </nav>
@@ -18,9 +20,11 @@
   <ul class="testimony-list">
     <% it.items.forEach(function (t) { %>
       <li>
-        <span class="badge badge-<%= t.state %>"><%= t.state %></span>
-        <span class="date"><%= t.date %></span>
-        <p class="excerpt"><%= t.excerpt %></p>
+        <a href="/admin/temoignages/<%= t.id %>" class="testimony-link">
+          <span class="badge badge-<%= t.state %>"><%= t.stateLabel %></span>
+          <span class="date"><%= t.date %></span>
+          <p class="excerpt"><%= t.excerpt %></p>
+        </a>
       </li>
     <% }) %>
   </ul>
