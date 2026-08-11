@@ -1,0 +1,51 @@
+<% layout("../layout.eta") %>
+<header class="admin-bar">
+  <a href="/admin/formulaire">← Constructeur</a>
+</header>
+
+<h1>Modifier un champ</h1>
+
+<form method="post" action="/admin/formulaire/<%= it.field.id %>/editer" class="builder-form">
+  <div class="field">
+    <label for="label">Libellé</label>
+    <input type="text" id="label" name="label" value="<%= it.field.label %>" required>
+  </div>
+
+  <div class="field">
+    <label for="field_type">Type</label>
+    <% if (it.field.protected) { %>
+      <input type="text" value="<%= it.field.fieldTypeLabel %>" disabled>
+      <p class="hint">Le champ témoignage garde son type et reste obligatoire.</p>
+    <% } else { %>
+      <select id="field_type" name="field_type">
+        <% it.types.forEach(function (t) { %>
+          <option value="<%= t.value %>"<% if (t.value === it.field.fieldType) { %> selected<% } %>><%= t.label %></option>
+        <% }) %>
+      </select>
+    <% } %>
+  </div>
+
+  <div class="field">
+    <label for="options">Options (une par ligne, pour choix unique/multiple)</label>
+    <textarea id="options" name="options" rows="3"><%= it.field.options.join('\n') %></textarea>
+  </div>
+
+  <div class="field">
+    <label for="osuny_block_mapping">Publication Osuny</label>
+    <select id="osuny_block_mapping" name="osuny_block_mapping">
+      <option value="">Ne pas publier ce champ</option>
+      <% it.mappings.forEach(function (m) { %>
+        <option value="<%= m %>"<% if (m === it.field.osunyMapping) { %> selected<% } %>><%= m === 'chapter' ? 'Bloc chapitre' : 'Tableau de métadonnées' %></option>
+      <% }) %>
+    </select>
+  </div>
+
+  <div class="field checkbox-row">
+    <% if (!it.field.protected) { %>
+      <label><input type="checkbox" name="required"<% if (it.field.required) { %> checked<% } %>> Champ obligatoire</label>
+    <% } %>
+    <label><input type="checkbox" name="private"<% if (it.field.private) { %> checked<% } %>> Champ privé (admin uniquement)</label>
+  </div>
+
+  <button type="submit">Enregistrer</button>
+</form>

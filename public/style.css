@@ -45,3 +45,15 @@ form.inline { display: inline; }
 .actions { margin-top: 2rem; }
 .actions h2 { margin-bottom: 0.5rem; }
 button.danger { background: #c0392b; color: #fff; border: none; margin-top: 1rem; }
+
+.field-list { list-style: none; padding: 0; }
+.field-row { display: flex; align-items: center; gap: 0.75rem; border: 1px solid #ddd; border-radius: 8px; padding: 0.75rem 1rem; margin-block: 0.5rem; background: Canvas; }
+.field-row.dragging { opacity: 0.5; }
+.field-row .handle { cursor: grab; color: #999; }
+.field-main { flex: 1; display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; }
+.field-tools { display: flex; align-items: center; gap: 0.75rem; }
+.badge-req { background: #e2e3ff; color: #2a2a80; }
+.opts { color: #666; font-size: 0.85rem; }
+.builder-form { max-width: 34rem; }
+.builder-form .checkbox-row label { font-weight: 400; }
+.danger-link { background: none; border: none; color: #c0392b; cursor: pointer; padding: 0; font: inherit; text-decoration: underline; }

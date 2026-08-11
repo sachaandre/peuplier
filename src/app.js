@@ -12,6 +12,7 @@ import { dirname, join } from 'node:path';
 import { config } from './config.js';
 import { publicRoutes } from './routes/public.js';
 import { adminRoutes } from './routes/admin.js';
+import { formBuilderRoutes } from './routes/form-builder.js';
 
 
 const here = dirname(fileURLToPath(import.meta.url));
@@ -78,6 +79,9 @@ export async function buildApp() {
 
   await app.register(publicRoutes);
   await app.register(adminRoutes);
+  await app.register(formBuilderRoutes);
+
+  
 
   return app;
 }

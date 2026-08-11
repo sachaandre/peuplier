@@ -4,6 +4,9 @@
   <nav>
     <a href="/admin">Tableau de bord</a>
     <a href="/admin/temoignages">Témoignages</a>
+    <% if (it.user.role === 'admin') { %>
+      <a href="/admin/formulaire">Formulaire</a>
+    <% } %>
     <% if (it.settings.site_url) { %>
       <a href="<%= it.settings.site_url %>" target="_blank" rel="noopener">Voir le site</a>
     <% } %>
