@@ -1,0 +1,4 @@
+<% layout("../layout.eta") %>
+<h1>Introuvable</h1>
+<p>Ce témoignage n'existe pas ou a été supprimé.</p>
+<p><a href="/admin/temoignages">Retour à la liste</a></p>
