@@ -1,6 +1,13 @@
-node_modules
+node_modules/
 .env
 
+# Base de données SQLite (runtime, jamais versionnée)
+db/*.db
+db/*.db-shm
+db/*.db-wal
 
-# Local Netlify folder
+# Divers
+.DS_Store
+
+# Ancien projet (Netlify)
 .netlify
